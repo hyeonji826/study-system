@@ -31,19 +31,33 @@ Spring Boot, Spring Security, MyBatis, MySQL을 기반으로 한 스터디 그�
 ## 🗃️ 프로젝트 구조
 
 src/
+
 ├─ main/
+
 │  ├─ java/com/koreait/member/
+
 │  │  ├─ config/         # Security 설정
+
 │  │  ├─ controller/     # 컨트롤러 (Member, Study, Apply)
+
 │  │  ├─ dto/            # DTO 클래스 (MemberDTO, StudyDTO, ApplyDTO)
+
 │  │  ├─ mapper/         # MyBatis Mapper 인터페이스
+
 │  │  ├─ service/        # 서비스 및 구현체
+
 │  │  ├─ security/       # BCrypt 암호화 관련 클래스
+
 │  │  └─ MemberApplication.java
+
 │  └─ resources/
+
 │     ├─ mapper/         # MyBatis Mapper XML
+
 │     ├─ templates/      # Thymeleaf HTML 템플릿
+
 │     └─ application.properties # DB 및 환경설정
+
 └─ ...
 
 
