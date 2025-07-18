@@ -44,10 +44,6 @@ src/
 │ └─ application.yml # DB 및 환경설정
 └─ ...
 
-sql
-복사
-편집
-
 ---
 
 ## ⚡️ 실행 방법
@@ -85,12 +81,9 @@ CREATE TABLE study_apply (
     FOREIGN KEY (member_id) REFERENCES member(id)
 );
 2. application.yml (DB 연결 정보)
-yaml
-복사
-편집
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/study_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/restapi?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: [DB유저명]
     password: [DB비번]
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -102,19 +95,7 @@ spring:
     cache: false
 server:
   port: 8080
-3. 빌드 & 실행
-Gradle
-bash
-복사
-편집
-./gradlew build
-./gradlew bootRun
-Maven
-bash
-복사
-편집
-mvn clean install
-mvn spring-boot:run
+
 🚀 주요 기능 안내
 회원가입/로그인/로그아웃 : BCrypt 암호화, 세션 인증
 
