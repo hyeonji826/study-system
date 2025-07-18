@@ -1,144 +1,93 @@
-스터디 관리 시스템(Spring Boot, MyBatis, Spring Security, MySQL)
+# 스터디 관리 시스템 (Spring Boot & MyBatis)
 
-📌 프로젝트 개요
+---
 
-🔐 회원 가입 / 로그인 / 로그아웃 (Spring Security, BCrypt 암호화)
+## 📌 프로젝트 개요
 
-📢 스터디 모집 게시판 (생성 / 목록 / 상세 / 검색)
+Spring Boot, Spring Security, MyBatis, MySQL을 기반으로 한 스터디 그룹 관리 및 모집 웹 애플리케이션입니다. 사용자는 회원가입 후 스터디를 개설하거나 다른 스터디에 참여할 수 있습니다.
 
-✏️ 스터디 신청 기능 (중복 신청 방지, 정원 체크)
+---
 
-📁 내가 만든 / 신청한 스터디 확인
+## ✨ 주요 기능
 
-🚨 비로그인 접근 시 로그인 페이지 리다이렉트 (세션 기반 인증)
+* **회원 관리**: Spring Security와 BCrypt를 이용한 안전한 회원가입, 로그인, 로그아웃 기능
+* **스터디 모집**: 스터디 생성, 전체 목록 조회, 상세 보기, 검색 기능
+* **스터디 신청**: 정원 체크 및 중복 신청 방지 로직이 포함된 스터디 참여 기능
+* **마이페이지**: 내가 개설한 스터디와 신청한 스터디 목록 확인
+* **인증 관리**: 비로그인 사용자의 접근 제한 및 로그인 페이지 리다이렉트 (세션 기반)
 
-🛠️ 기술 스택
+---
 
-Java 17+
+## 🛠️ 기술 스택
 
-Spring Boot 3.x
+* **Language**: Java 17+
+* **Framework**: Spring Boot 3.x, Spring Security
+* **Persistence**: MyBatis, MySQL 8.x
+* **Template Engine**: Thymeleaf
+* **Build Tool**: Gradle
 
-Spring Security (세션 기반, BCryptPasswordEncoder)
+---
 
-MyBatis
-
-MySQL 8.x
-
-Thymeleaf (HTML 템플릿)
-
-Gradle
-
-🗃️ 프로젝트 구조
+## 🗃️ 프로젝트 구조
 
 src/
 ├─ main/
 │  ├─ java/com/koreait/member/
-│  │  ├─ 📂 config/                  # Security 설정
-│  │  ├─ 📂 controller/              # 컨트롤러 (Member, Study, Apply)
-│  │  ├─ 📂 dto/                     # DTO 클래스 (MemberDTO, StudyDTO, ApplyDTO)
-│  │  ├─ 📂 mapper/                  # MyBatis Mapper
-│  │  ├─ 📂 service/                 # 서비스/구현체
-│  │  ├─ 📂 security/                # Bcrypt 암호화 변환
-│  │  └─ 📄 MemberApplication.java
+│  │  ├─ config/         # Security 설정
+│  │  ├─ controller/     # 컨트롤러 (Member, Study, Apply)
+│  │  ├─ dto/            # DTO 클래스 (MemberDTO, StudyDTO, ApplyDTO)
+│  │  ├─ mapper/         # MyBatis Mapper 인터페이스
+│  │  ├─ service/        # 서비스 및 구현체
+│  │  ├─ security/       # BCrypt 암호화 관련 클래스
+│  │  └─ MemberApplication.java
 │  └─ resources/
-│     ├─ 📂 mapper/                  # MySQL DB 연동
-│     ├─ 📂 templates/               # Thymeleaf HTML
-│     └─ 📄 application.properties          # DB 및 환경설정
+│     ├─ mapper/         # MyBatis Mapper XML
+│     ├─ templates/      # Thymeleaf HTML 템플릿
+│     └─ application.properties # DB 및 환경설정
 └─ ...
 
-🚀 실행 방법
 
-1️⃣ DB 생성 및 테이블 설정 (MySQL)
+---
 
-CREATE DATABASE studyroom ;
-USE studyroom;
+## 🚀 실행 방법
 
-CREATE TABLE member (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(30) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL,
-    name VARCHAR(30) NOT NULL
-);
+1.  **데이터베이스 설정**
+    * `database.sql` 파일을 사용하여 데이터베이스 및 테이블을 생성합니다.
 
-CREATE TABLE study (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    description VARCHAR(200),
-    max_members INT NOT NULL,
-    deadline DATE NOT NULL,
-    created_by INT NOT NULL,
-    FOREIGN KEY (created_by) REFERENCES member(id)
-);
+2.  **설정 파일 구성**
+    * `src/main/resources/application.properties` 파일에 아래 내용을 작성합니다.
+    * `[DB_USERNAME]`과 `[DB_PASSWORD]`는 실제 DB 계정 정보로 변경해주세요.
 
-CREATE TABLE study_apply (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    study_id INT NOT NULL,
-    member_id INT NOT NULL,
-    apply_at DATETIME NOT NULL,
-    UNIQUE (study_id, member_id),
-    FOREIGN KEY (study_id) REFERENCES study(id),
-    FOREIGN KEY (member_id) REFERENCES member(id)
-);
+    ```properties
+    # DataSource
+    spring.datasource.url=jdbc:mysql://localhost:3306/studyroom?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    spring.datasource.username=[DB_USERNAME]
+    spring.datasource.password=[DB_PASSWORD]
+    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
-2️⃣ 설정 파일 구성 (application.yml)
+    # MyBatis
+    mybatis.mapper-locations=classpath:mapper/*.xml
+    mybatis.configuration.map-underscore-to-camel-case=true
 
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/studyroom?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: [DB_USERNAME]
-    password: [DB_PASSWORD]
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  mybatis:
-    mapper-locations: classpath:mapper/*.xml
-    configuration:
-      map-underscore-to-camel-case: true
-  thymeleaf:
-    cache: false
-server:
-  port: 8080
+    # Thymeleaf
+    spring.thymeleaf.cache=false
 
-✨ 주요 기능 안내
+    # Server
+    server.port=8080
+    ```
+3.  **애플리케이션 실행**
+    * `MemberApplication.java` 파일을 실행하여 서버를 시작합니다.
 
-🔐 회원가입 / 로그인 / 로그아웃 : BCrypt 암호화, 세션 인증
+---
 
-📌 스터디 개설 : 로그인 후 가능, 제목/설명/정원/마감일 입력
+## 🌐 페이지 안내
 
-📋 스터디 목록 : 전체 목록 조회 / 검색 / 페이징, 상세 페이지에서 신청
-
-📮 스터디 신청 : 중복 및 정원 초과 신청 불가
-
-📑 내가 신청한 스터디 / 내가 만든 스터디 조회
-
-🌐 페이지 예시
-
-URL
-
-기능 설명
-
-/register
-
-회원가입
-
-/login
-
-로그인
-
-/home
-
-마이페이지로 이동
-
-/studyList
-
-전체 스터디 목록
-
-/study/create
-
-스터디 개설 페이지
-
-/myApply
-
-내가 신청한 스터디 목록
-
-/myStudy
-
-내가 만든 스터디 목록
+| URL             | 기능 설명                  |
+| --------------- | -------------------------- |
+| `/register`     | 회원가입 페이지            |
+| `/login`        | 로그인 페이지              |
+| `/home`         | 마이페이지로 이동          |
+| `/studyList`    | 전체 스터디 목록           |
+| `/study/create` | 스터디 개설 페이지         |
+| `/myApply`      | 내가 신청한 스터디 목록    |
+| `/myStudy`      | 내가 만든 스터디 목록      |
