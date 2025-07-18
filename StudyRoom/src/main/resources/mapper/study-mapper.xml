@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koreait.member.mapper.StudyMapper">
+    <resultMap id="studyMap" type="com.koreait.member.dto.StudyDTO">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="maxMembers" column="max_members"/>
+        <result property="deadline" column="deadline"/>
+        <result property="createdBy" column="created_by"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.koreait.member.dto.StudyDTO">
+        INSERT INTO study (title, description, max_members, deadline, created_by)
+        VALUES (#{title}, #{description}, #{maxMembers}, #{deadline}, #{createdBy})
+    </insert>
+
+    <select id="findById" resultMap="studyMap">
+        SELECT id, title, description, max_members, deadline, created_by
+        FROM study
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="studyMap">
+        SELECT id, title, description, max_members, deadline, created_by
+        FROM study
+    </select>
+
+    <select id="findByCreator" resultMap="studyMap">
+        SELECT id, title, description, max_members, deadline, created_by
+        FROM study
+        WHERE created_by = #{createdBy}
+    </select>
+</mapper>

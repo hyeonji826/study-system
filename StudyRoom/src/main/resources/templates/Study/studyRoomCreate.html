@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>스터디 개설</title>
+</head>
+<body>
+<h2>스터디 개설</h2>
+<form th:action="@{/study/create}" method="post">
+    <p>제목: <input type="text" name="title" required></p>
+    </hr>
+    <p>내용: <input type="text" name="description"></p>
+    <p>정원 수 : <input type="number" name="maxMembers" required></p>
+    <p>마감기한 : <input type="date" name="deadline" required></p>
+    <button type="submit">개설하기</button>
+</form>
+<a th:href="@{/studyList}">목록</a>
+</body>
+</html>

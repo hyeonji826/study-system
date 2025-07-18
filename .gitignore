@@ -1,0 +1,5 @@
+.env
+application.properties
+*.log
+*.tmp
+*.bak

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>홈</title>
+</head>
+<body>
+<h2 th:text="'환영합니다, ' + ${user.name} + '님!'"></h2>
+<ul>
+    <li>아이디: <span th:text="${user.username}"></span></li>
+    <li>이름: <span th:text="${user.name}"></span></li>
+</ul>
+<p><a th:href="@{/update}">마이페이지</a></p>
+<p><a th:href="@{/myStudy}">내가 만든 스터디</a></p>
+<p><a th:href="@{/myApply}">내가 신청한 스터디</a></p>
+<p><a th:href="@{/studyList}">스터디 게시판</a></p>
+<p><a th:href="@{/logout}">로그아웃</a></p>
+</body>
+</html>

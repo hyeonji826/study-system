@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+</head>
+<body>
+<h2>마이페이지</h2>
+<form th:action="@{/update}" method="post">
+    <div>
+        <label>아이디: <input type="text" th:value="${user.username}" name="username" readonly></label>
+    </div>
+    <div>
+        <label>이름: <input type="text" th:value="${user.name}" name="name" readonly></label>
+    </div>
+    <button type="submit" disabled>정보수정</button>
+</form>
+<a th:href="@{/home}">홈</a>
+</body>
+</html>

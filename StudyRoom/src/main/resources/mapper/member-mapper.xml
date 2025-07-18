@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koreait.member.mapper.MemberMapper">
+
+    <select id="findByUsername" resultType="com.koreait.member.dto.MemberDTO">
+        SELECT * FROM member WHERE username = #{username}
+    </select>
+
+    <insert id="save" parameterType="com.koreait.member.dto.MemberDTO">
+        INSERT INTO member (username, password, name)
+        VALUES (#{username}, #{password}, #{name})
+    </insert>
+
+    <select id="findById" resultType="com.koreait.member.dto.MemberDTO">
+        SELECT * FROM member WHERE id = #{id}
+    </select>
+
+</mapper>

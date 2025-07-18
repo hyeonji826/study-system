@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>내가 신청한 스터디</title>
+</head>
+<body>
+<h2>내가 신청한 스터디</h2>
+<table border="1">
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>마감일</th>
+        <th>정원</th>
+    </tr>
+    <tr th:each="study, idx : ${myApplyStudies}">
+        <td th:text="${idx.count}"></td>
+        <td th:text="${study.title}"></td>
+        <td th:text="${study.deadline}"></td>
+        <td th:text="${study.maxMembers}"></td>
+    </tr>
+</table>
+<a th:href="@{/home}">홈</a>
+</body>
+</html>

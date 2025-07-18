@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>스터디 상세</title>
+</head>
+<body>
+<h2>스터디 상세</h2>
+<ul>
+    <li>제목: <span th:text="${study.title}"></span></li>
+    <li>설명: <span th:text="${study.description}"></span></li>
+    <li>정원: <span th:text="${study.maxMembers}"></span></li>
+    <li>마감일: <span th:text="${study.deadline}"></span></li>
+    <li>개설자: <span th:text="${memberNames[study.createdBy]}"></span></li>
+</ul>
+<!-- 신청 버튼 -->
+<form th:action="@{/apply/{id}(id=${study.id})}" method="post">
+    <button type="submit">신청하기</button>
+</form>
+<div th:if="${msg != null}" th:text="${msg}"></div>
+<a th:href="@{/studyList}">목록</a>
+</body>
+</html>
